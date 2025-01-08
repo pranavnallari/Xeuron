@@ -24,6 +24,7 @@ float activation_function(ActivationFunction type, float input) {
         case SIGMOID: return sigmoid(input);
         case TANH: return tanhf(input);
     }
+    return NAN;
 }
 
 

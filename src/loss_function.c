@@ -9,7 +9,7 @@ static float mse(Layer *output_layer, float actual_values[]) {
         exit(EXIT_FAILURE);
     }
     float result = 0.0f;
-    for (int i = 0; i < output_layer->num_neurons; ++i) {
+    for (unsigned i = 0; i < output_layer->num_neurons; ++i) {
         float error = output_layer->neurons[i].value - actual_values[i];
         result += error * error;
     }
@@ -25,7 +25,7 @@ static float bce(Layer *output_layer, float actual_values[]) {
     float result = 0.0f;
     const float epsilon = FLT_MIN; // Small constant to avoid log(0)
 
-    for (int i = 0; i < output_layer->num_neurons; ++i) {
+    for (unsigned i = 0; i < output_layer->num_neurons; ++i) {
         float predicted = output_layer->neurons[i].value;
 
         if (predicted < epsilon) predicted = epsilon;
@@ -47,7 +47,7 @@ static float cce(Layer *output_layer, float actual_values[]) {
     float result = 0.0f;
     const float epsilon = FLT_MIN; // Small constant to avoid log(0)
 
-    for (int i = 0; i < output_layer->num_neurons; ++i) {
+    for (unsigned i = 0; i < output_layer->num_neurons; ++i) {
         float predicted = output_layer->neurons[i].value;
 
         if (predicted < epsilon) predicted = epsilon;
@@ -70,4 +70,6 @@ float loss_function(LossFunction type, Layer *output_layer, float actual_values[
         case BCE: return bce(output_layer, actual_values);
         case CCE: return cce(output_layer, actual_values);
     }
+
+    return NAN;
 }
